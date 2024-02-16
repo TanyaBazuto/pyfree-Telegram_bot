@@ -2,6 +2,8 @@
 служебную функциональность, оставляя пользователю написание логики ответа на сообщения. Таких библиотек для Python множество, мы будем использовать
 telebot https://github.com/eternnoir/pyTelegramBotAPI.
 
+# ВАРИАНТ1
+---------------------------------------------------------------------
 
 import telebot                                            # в Pythonanywhere команда pip3 install --user pytelegrambotapi
 
@@ -20,3 +22,27 @@ def echo(message):                                        # Определени
 
 bot.polling(none_stop=True)                               # функция, polling ПОСТОЯННО ОБРАЩАЕТСЯ К СЕРВЕРАМ ТЕЛЕГРАМ - начинает отправку запросов серверам Телеграм, используя токен, и спрашивает есть ли сообщения.
                                                             Если есть обращается к обработке - def echo.
+
+
+
+# ВАРИАНТ2
+---------------------------------------------------------------------
+import telebot
+
+token = ''
+
+bot = telebot.TeleBot(token)
+
+my_name = 'Дима'
+
+
+@bot.message_handler(content_types=["text"])
+def echo(message):
+    if my_name in message.text:
+        text = 'Ба! Знакомые все лица'
+    else:
+        text = message.text
+    bot.send_message(message.chat.id, text)
+
+
+bot.polling(none_stop=True)
